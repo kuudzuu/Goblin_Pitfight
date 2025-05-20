@@ -11,5 +11,9 @@ config_version=5
 [application]
 
 config/name="Goblin_Pitfight"
+run/main_scene="uid://c7l4pmn8hj2ge"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"

@@ -1,0 +1,22 @@
+{
+	"Example": {
+		"hp": 8,
+		"atk": 8,
+		"spd": 8
+	},
+	"Goblin1": {
+		"hp": 1,
+		"atk": 1,
+		"spd": 1
+	},
+	"Goblin2": {
+		"hp": 2,
+		"atk": 2,
+		"spd": 2
+	},
+	"Goblin3": {
+		"hp": 3,
+		"atk": 3,
+		"spd": 3
+	}
+}

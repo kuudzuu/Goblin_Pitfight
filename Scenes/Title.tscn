@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsmkv64jvmdxe"]
+
+[ext_resource type="Script" uid="uid://cssi65qgplqno" path="res://Scripts/Title.gd" id="1_6khh7"]
+[ext_resource type="Texture2D" uid="uid://ck14ts5bqxamp" path="res://Textures/Demo/Title/title.png" id="1_tochr"]
+[ext_resource type="Texture2D" uid="uid://dcpfc0uwarote" path="res://Textures/Demo/Title/start.png" id="3_bwrlp"]
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_6khh7")
+metadata/Group = "Title"
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(581, 326)
+scale = Vector2(0.459028, 0.459028)
+texture = ExtResource("1_tochr")
+metadata/Group = "Title"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = 462.0
+offset_top = 206.0
+offset_right = 717.0
+offset_bottom = 329.0
+texture_normal = ExtResource("3_bwrlp")
+metadata/Group = "Title"
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_start_button_pressed"]
