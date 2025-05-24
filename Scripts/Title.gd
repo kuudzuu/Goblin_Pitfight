@@ -3,4 +3,4 @@ extends Node
 signal start_game
 
 func _on_start_button_pressed() -> void:
-	start_game.emit()
+	emit_signal("start_game")
