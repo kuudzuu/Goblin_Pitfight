@@ -1,25 +1,62 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsmkv64jvmdxe"]
+[gd_scene load_steps=8 format=3 uid="uid://bsmkv64jvmdxe"]
 
 [ext_resource type="Script" uid="uid://cssi65qgplqno" path="res://Scripts/Title.gd" id="1_6khh7"]
-[ext_resource type="Texture2D" uid="uid://ck14ts5bqxamp" path="res://Textures/Demo/Title/title.png" id="1_tochr"]
-[ext_resource type="Texture2D" uid="uid://dcpfc0uwarote" path="res://Textures/Demo/Title/start.png" id="3_bwrlp"]
+[ext_resource type="Texture2D" uid="uid://xogbx7fu3f4d" path="res://Textures/Demo/Title/Title_BG.PNG" id="2_bwrlp"]
+[ext_resource type="Texture2D" uid="uid://vnjc6jvkea5a" path="res://Textures/Demo/Title/Title_Goblin.PNG" id="3_t32dt"]
+[ext_resource type="Texture2D" uid="uid://chhx0vyhiq2wt" path="res://Textures/Demo/Title/Title_Start.PNG" id="4_71b5n"]
+[ext_resource type="Texture2D" uid="uid://cbsguqxc42k6p" path="res://Textures/Demo/Title/Title_Logo.PNG" id="4_84h87"]
+[ext_resource type="Texture2D" uid="uid://duaclkox8txrw" path="res://Textures/Demo/Title/Title_Quit.PNG" id="4_t32dt"]
+[ext_resource type="Texture2D" uid="uid://gidcobj0t1nq" path="res://Textures/Demo/Title/Title_Settings.PNG" id="5_w1iyi"]
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_6khh7")
 metadata/Group = "Title"
 
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(574.222, 324.625)
+scale = Vector2(0.452257, 0.452257)
+texture = ExtResource("2_bwrlp")
+
+[node name="TitleGoblin" type="Sprite2D" parent="."]
+position = Vector2(574, 321)
+scale = Vector2(0.464583, 0.464583)
+texture = ExtResource("3_t32dt")
+
+[node name="StartButton" type="TextureButton" parent="."]
+offset_left = 459.0
+offset_top = 263.0
+offset_right = 670.0
+offset_bottom = 367.0
+texture_normal = ExtResource("4_71b5n")
+ignore_texture_size = true
+stretch_mode = 0
+metadata/Group = "Title"
+
+[node name="QuitButton" type="TextureButton" parent="."]
+offset_left = 771.0
+offset_top = 315.0
+offset_right = 966.0
+offset_bottom = 411.0
+texture_normal = ExtResource("4_t32dt")
+ignore_texture_size = true
+stretch_mode = 0
+metadata/Group = "Title"
+
+[node name="SettingsButton" type="TextureButton" parent="."]
+offset_left = 128.0
+offset_top = 294.0
+offset_right = 412.0
+offset_bottom = 434.0
+texture_normal = ExtResource("5_w1iyi")
+ignore_texture_size = true
+stretch_mode = 0
+metadata/Group = "Title"
+
 [node name="Title" type="Sprite2D" parent="."]
-position = Vector2(581, 326)
-scale = Vector2(0.459028, 0.459028)
-texture = ExtResource("1_tochr")
-metadata/Group = "Title"
+position = Vector2(582, 163)
+scale = Vector2(0.454212, 0.454212)
+texture = ExtResource("4_84h87")
 
-[node name="TextureButton" type="TextureButton" parent="."]
-offset_left = 462.0
-offset_top = 206.0
-offset_right = 717.0
-offset_bottom = 329.0
-texture_normal = ExtResource("3_bwrlp")
-metadata/Group = "Title"
-
-[connection signal="pressed" from="TextureButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]

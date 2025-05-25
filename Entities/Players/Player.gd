@@ -1,13 +1,17 @@
 class_name Player extends Node
 
-var id: String
-var GOBLINS: Dictionary
+var id: String # internal
+var username: String # player enters this for screen name
 
+var GOBLINS: Dictionary # List of goblins this player has
+
+# Creates new player instance (constructor)
 static func create(new_id) -> Player:
 	var player = Player.new()
 	player.id = new_id
 	return player
 
+# Adds goblin to this player's GOBLINS
 func add_goblin(goblin):
 	GOBLINS[goblin["id"]] = goblin
 
