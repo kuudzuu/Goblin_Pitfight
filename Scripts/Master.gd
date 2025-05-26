@@ -1,21 +1,19 @@
 ## This is ALWAYS the root node.
-## When GP is opened, this creates and runs the Intro scene
-## When the Intro scene signals that a game has started,
-## the Intro scene is deleted (with important info extracted)
-## and a Game scene starts, which does everything else
-## I think this will let us create multiple games in parallel, leading to multiplayering
+## Does not have much in it.
+## Initializes SCREEN_SCENE, which does most of the processing
+## Holds some variables for global data and such lol
+## Idk what the Root Of All Roots "Master" scene is SUPPOSED to do
+## But it seems like it should be too meta level to even handle screen changes
+## So tada
 
 extends Node
 
-@onready var INTRO_SCENE = preload("res://Scenes/Intro.tscn")
+@onready var GPMANAGER_SCENE = preload("res://Scenes/GPManager.tscn")
 
 # Builtin ======================================================================
 
 ## First thing that runs in the entire game lol
 ## Creates all players (demo only)
 func _ready():
-	start_intro()
-
-func start_intro():
-	var Intro = INTRO_SCENE.instantiate()
-	add_child(Intro)
+	var GP_Manager = GPMANAGER_SCENE.instantiate()
+	add_child(GP_Manager)

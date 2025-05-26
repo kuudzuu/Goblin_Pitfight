@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ddljddprr8uoc"]
 
 [ext_resource type="Script" uid="uid://cvobq4ysf4tju" path="res://Scripts/Screens/Draft.gd" id="1_q8hys"]
-[ext_resource type="Texture2D" uid="uid://ba1nnaygd5fwk" path="res://Textures/Demo/Draft/draft.png" id="2_bmbrf"]
+[ext_resource type="Texture2D" uid="uid://crxdfv588abn3" path="res://Textures/Demo/Draft/Draft_BG.PNG" id="2_q8hys"]
 [ext_resource type="Texture2D" uid="uid://7einxbr2u63s" path="res://Textures/Demo/Draft/Goblins/G1.png" id="3_yue8f"]
 [ext_resource type="Texture2D" uid="uid://shcgjavp3c2x" path="res://Textures/Demo/Draft/Goblins/G2.png" id="4_5mw6h"]
 [ext_resource type="Texture2D" uid="uid://bjfifsyf7s1jv" path="res://Textures/Demo/Draft/Goblins/G3.png" id="5_i00wl"]
@@ -10,11 +10,10 @@
 script = ExtResource("1_q8hys")
 metadata/Group = "Draft"
 
-[node name="Draft" type="Sprite2D" parent="."]
-position = Vector2(572, 326)
-scale = Vector2(0.469274, 0.469274)
-texture = ExtResource("2_bmbrf")
-metadata/Group = "Draft"
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(574.222, 324.625)
+scale = Vector2(0.452257, 0.452257)
+texture = ExtResource("2_q8hys")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 offset_left = 35.0
