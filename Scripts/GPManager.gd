@@ -114,6 +114,8 @@ func register_scene_change(scene_name):
 func create_and_run_game_with_players(num_players):
 	GAME_MANAGER = GAME_MANAGER_SCENE.instantiate()
 	GAME_MANAGER.scene_change.connect(register_scene_change)
+	GAME_MANAGER.game_failed_to_start.connect(go_back)
 	get_parent().add_child(GAME_MANAGER)
+	GAME_MANAGER.init()
 	GAME_MANAGER.start(num_players)
 	close_by_group("ModeSelect")

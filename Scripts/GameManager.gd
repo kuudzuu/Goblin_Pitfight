@@ -12,15 +12,24 @@
 
 extends Node
 
-var GAME = preload("res://Scripts/Entities/Game/Game.gd").new()
+@onready var GAME_SCENE = preload("res://Scripts/Entities/Game/Game.gd")
 @onready var DRAFT_SCENE = preload("res://Scenes/Screens/Draft.tscn")
 
+@onready var PLAYER_MANAGER = preload("res://Scripts/Entities/Players/PlayerManager.gd").new()
+@onready var ARENA_MANAGER = preload("res://Scripts/Entities/Arenas/ArenaManager.gd").new()
+
+var GAME
+
 signal scene_change
+signal game_failed_to_start
+
+func init():
+	ARENA_MANAGER.init()
 
 ## Called by GPManager when a game is started.
 func start(num_players):
 	create_game()
-	fill_players()
+	fill_players(num_players)
 	choose_arena()
 	open_draft()
 
@@ -30,18 +39,22 @@ func close():
 		child.queue_free()
 
 func create_game():
-	pass
+	GAME = GAME_SCENE.create()
 
 ## Called when game first starts
 ## Fills all players
 ## TODO: Hook up to multiplayer game matching
-func fill_players():
-	pass
+func fill_players(num_players):
+	## TODO: Some sort of loop where we wait to connect with other players attempting to join a game
+	## with the same mode. After a timeout or whatever, we can go back by emitting signal game_failed_to_start
+	## For now, we hardcode add players
+	for i in range(num_players):
+		GAME.add_player(PLAYER_MANAGER.create_new_player())
 
 ## Called when game first starts
 ## Chooses arena
 func choose_arena():
-	pass
+	GAME.set_arena(ARENA_MANAGER.get_new_arena())
 
 ## Opens the Draft scene, letting players draft
 func open_draft():

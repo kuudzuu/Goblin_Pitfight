@@ -1,10 +1,16 @@
 extends Node
 
-var PLAYER = preload("res://Entities/Players/Player.gd").new()
+var PLAYER = preload("res://Scripts/Entities/Players/Player.gd").new()
 var PlayerDict: Dictionary
 
-func create_player(id):
+var curr_id = "a"
+
+## TODO: AWFUL WAY TO DO IDS! FIX THIS LOL
+func create_new_player():
+	var id = curr_id
+	curr_id += "a"
 	PlayerDict[id] = PLAYER.create(id)
+	return PlayerDict[id]
 
 func add_goblin_to_player(player_id, goblin):
 	if not PlayerDict.has(player_id):

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddljddprr8uoc"]
+[gd_scene load_steps=8 format=3 uid="uid://ddljddprr8uoc"]
 
 [ext_resource type="Script" uid="uid://cvobq4ysf4tju" path="res://Scripts/Screens/Draft.gd" id="1_q8hys"]
 [ext_resource type="Texture2D" uid="uid://crxdfv588abn3" path="res://Textures/Demo/Draft/Draft_BG.PNG" id="2_q8hys"]
 [ext_resource type="Texture2D" uid="uid://7einxbr2u63s" path="res://Textures/Demo/Draft/Goblins/G1.png" id="3_yue8f"]
 [ext_resource type="Texture2D" uid="uid://shcgjavp3c2x" path="res://Textures/Demo/Draft/Goblins/G2.png" id="4_5mw6h"]
 [ext_resource type="Texture2D" uid="uid://bjfifsyf7s1jv" path="res://Textures/Demo/Draft/Goblins/G3.png" id="5_i00wl"]
+[ext_resource type="Texture2D" uid="uid://ot75hxd1ag7i" path="res://Textures/Demo/Cards/arena_front.png" id="6_yue8f"]
+[ext_resource type="Texture2D" uid="uid://cui5y1hc2pk82" path="res://Textures/Demo/Cards/goblin_front.png" id="7_5mw6h"]
 
 [node name="Draft" type="Node2D"]
 script = ExtResource("1_q8hys")
@@ -44,6 +46,26 @@ texture_normal = ExtResource("5_i00wl")
 ignore_texture_size = true
 stretch_mode = 0
 metadata/Group = "Draft"
+
+[node name="ArenaFront" type="Sprite2D" parent="."]
+position = Vector2(220, 106)
+scale = Vector2(0.0730769, 0.0730769)
+texture = ExtResource("6_yue8f")
+
+[node name="GoblinFront" type="Sprite2D" parent="."]
+position = Vector2(438, 153)
+scale = Vector2(0.0850962, 0.0850962)
+texture = ExtResource("7_5mw6h")
+
+[node name="GoblinFront2" type="Sprite2D" parent="."]
+position = Vector2(636, 155)
+scale = Vector2(0.0850962, 0.0850962)
+texture = ExtResource("7_5mw6h")
+
+[node name="GoblinFront3" type="Sprite2D" parent="."]
+position = Vector2(834, 156)
+scale = Vector2(0.0850962, 0.0850962)
+texture = ExtResource("7_5mw6h")
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_goblin_1_selected"]
 [connection signal="pressed" from="TextureButton2" to="." method="_on_goblin_2_selected"]
