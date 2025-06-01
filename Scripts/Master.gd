@@ -8,12 +8,20 @@
 
 extends Node
 
-@onready var GPMANAGER_SCENE = preload("res://Scenes/GPManager.tscn")
+@onready var SCREEN_MANAGER_SCENE = preload("res://Scenes/ScreenManager.tscn")
+@onready var INPUT_CONTROLLER = preload("res://Scripts/InputController.gd").new()
+@onready var GAME_INTERFACE = preload("res://Scripts/GameInterface.gd").new()
+var SCREEN_MANAGER
 
 # Builtin ======================================================================
 
 ## First thing that runs in the entire game lol
-## Creates all players (demo only)
 func _ready():
-	var GP_Manager = GPMANAGER_SCENE.instantiate()
-	add_child(GP_Manager)
+	SCREEN_MANAGER = SCREEN_MANAGER_SCENE.instantiate()
+	add_child(SCREEN_MANAGER)
+	
+	INPUT_CONTROLLER.init(SCREEN_MANAGER, GAME_INTERFACE)
+	GAME_INTERFACE.init(INPUT_CONTROLLER)
+	SCREEN_MANAGER.init(INPUT_CONTROLLER)
+	
+	SCREEN_MANAGER.run()

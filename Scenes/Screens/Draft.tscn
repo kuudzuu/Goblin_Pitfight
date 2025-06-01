@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://ddljddprr8uoc"]
 
 [ext_resource type="Script" uid="uid://cvobq4ysf4tju" path="res://Scripts/Screens/Draft.gd" id="1_q8hys"]
-[ext_resource type="Texture2D" uid="uid://crxdfv588abn3" path="res://Textures/Demo/Draft/Draft_BG.PNG" id="2_q8hys"]
-[ext_resource type="Texture2D" uid="uid://7einxbr2u63s" path="res://Textures/Demo/Draft/Goblins/G1.png" id="3_yue8f"]
-[ext_resource type="Texture2D" uid="uid://shcgjavp3c2x" path="res://Textures/Demo/Draft/Goblins/G2.png" id="4_5mw6h"]
-[ext_resource type="Texture2D" uid="uid://bjfifsyf7s1jv" path="res://Textures/Demo/Draft/Goblins/G3.png" id="5_i00wl"]
-[ext_resource type="Texture2D" uid="uid://ot75hxd1ag7i" path="res://Textures/Demo/Cards/arena_front.png" id="6_yue8f"]
-[ext_resource type="Texture2D" uid="uid://cui5y1hc2pk82" path="res://Textures/Demo/Cards/goblin_front.png" id="7_5mw6h"]
+[ext_resource type="Texture2D" uid="uid://crxdfv588abn3" path="res://Textures/Screens/Draft/Draft_BG.PNG" id="2_q8hys"]
+[ext_resource type="Texture2D" uid="uid://7einxbr2u63s" path="res://Textures/Screens/Draft/Goblins/G1.png" id="3_yue8f"]
+[ext_resource type="Texture2D" uid="uid://shcgjavp3c2x" path="res://Textures/Screens/Draft/Goblins/G2.png" id="4_5mw6h"]
+[ext_resource type="Texture2D" uid="uid://bjfifsyf7s1jv" path="res://Textures/Screens/Draft/Goblins/G3.png" id="5_i00wl"]
+[ext_resource type="Texture2D" uid="uid://ot75hxd1ag7i" path="res://Textures/Assets/Cards/arena_front.png" id="6_yue8f"]
+[ext_resource type="Texture2D" uid="uid://cui5y1hc2pk82" path="res://Textures/Assets/Cards/goblin_front.png" id="7_5mw6h"]
 
 [node name="Draft" type="Node2D"]
 script = ExtResource("1_q8hys")
@@ -17,7 +17,7 @@ position = Vector2(574.222, 324.625)
 scale = Vector2(0.452257, 0.452257)
 texture = ExtResource("2_q8hys")
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="Goblin1" type="TextureButton" parent="."]
 offset_left = 35.0
 offset_top = 236.0
 offset_right = 366.0
@@ -27,7 +27,7 @@ ignore_texture_size = true
 stretch_mode = 0
 metadata/Group = "Draft"
 
-[node name="TextureButton2" type="TextureButton" parent="."]
+[node name="Goblin2" type="TextureButton" parent="."]
 offset_left = 414.0
 offset_top = 267.0
 offset_right = 810.0
@@ -37,7 +37,7 @@ ignore_texture_size = true
 stretch_mode = 0
 metadata/Group = "Draft"
 
-[node name="TextureButton3" type="TextureButton" parent="."]
+[node name="Goblin3" type="TextureButton" parent="."]
 offset_left = 868.0
 offset_top = 152.0
 offset_right = 1040.0
@@ -67,6 +67,6 @@ position = Vector2(834, 156)
 scale = Vector2(0.0850962, 0.0850962)
 texture = ExtResource("7_5mw6h")
 
-[connection signal="pressed" from="TextureButton" to="." method="_on_goblin_1_selected"]
-[connection signal="pressed" from="TextureButton2" to="." method="_on_goblin_2_selected"]
-[connection signal="pressed" from="TextureButton3" to="." method="_on_goblin_3_selected"]
+[connection signal="pressed" from="Goblin1" to="." method="_on_goblin_1_selected"]
+[connection signal="pressed" from="Goblin2" to="." method="_on_goblin_2_selected"]
+[connection signal="pressed" from="Goblin3" to="." method="_on_goblin_3_selected"]

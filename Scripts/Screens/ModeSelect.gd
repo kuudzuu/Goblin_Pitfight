@@ -1,5 +1,7 @@
 extends Node
 
+var NAME = "Mode"
+
 signal players_chosen
 
 func _on_2p_button_pressed() -> void:
