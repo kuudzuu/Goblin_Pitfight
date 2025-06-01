@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://orl0ccw4tkkm"]
+
+[ext_resource type="Script" uid="uid://dfs68nxrxilsr" path="res://Scripts/Screens/Matching.gd" id="1_efku3"]
+[ext_resource type="Texture2D" uid="uid://dimn88f703kbb" path="res://Textures/Screens/Matching/Matching_BG.PNG" id="2_wjecr"]
+[ext_resource type="Texture2D" uid="uid://camecj146w5sw" path="res://Textures/Screens/Matching/Finding.PNG" id="3_4hvgd"]
+[ext_resource type="Texture2D" uid="uid://dyvgxfpw8o6xl" path="res://Textures/Screens/Matching/Found.PNG" id="4_4du43"]
+
+[node name="Matching" type="Node2D"]
+script = ExtResource("1_efku3")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(574.222, 324.625)
+scale = Vector2(0.452257, 0.452257)
+texture = ExtResource("2_wjecr")
+
+[node name="Finding" type="Sprite2D" parent="."]
+position = Vector2(573.111, 324.75)
+scale = Vector2(0.452431, 0.452431)
+texture = ExtResource("3_4hvgd")
+
+[node name="Found" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(577, 323)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("4_4du43")

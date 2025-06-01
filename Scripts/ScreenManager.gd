@@ -13,8 +13,10 @@
 extends Node
 
 ## List of possible Screens
-@onready var TITLE_SCENE = preload("res://Scenes/Screens/Title.tscn")
-@onready var MODE_SCENE = preload("res://Scenes/Screens/Mode.tscn")
+@onready var TITLE_SCREEN = preload("res://Scenes/Screens/Title.tscn")
+@onready var MODE_SCREEN = preload("res://Scenes/Screens/Mode.tscn")
+@onready var MATCHING_SCREEN = preload("res://Scenes/Screens/Matching.tscn")
+@onready var PITFIGHT_SCREEN = preload("res://Scenes/Screens/Pitfight.tscn")
 
 ## Reference to InputController (throughway to communicate with game interface)
 ## I figure user input should always be routed through a central area dedicated to it
@@ -22,149 +24,100 @@ var INPUT_CONTROLLER
 
 ## What scene is loaded right now?
 ## Direct reference to scene
-var CURRENT_SCENE
+var CURRENT_SCREEN
 
 # Builtin ======================================================================
 
 ## Used to parse user input
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		reverse_scene()
+		reverse_screen()
 
+## Manually run by Master when created
+## Gives reference to InputController.gd
 func init(InputController):
 	INPUT_CONTROLLER = InputController
 
+## Essentially the "start button" for the screens of the game to show
+## Because only one start, only one run, so it is hardcoded:
+## Opens the title lol
 func run():
-	open_scene("Title")
-	INPUT_CONTROLLER.connect_signals(CURRENT_SCENE)
+	open_screen("Title")
 
-func advance_scene():
-	match CURRENT_SCENE.NAME:
+## Advances screens (i.e. pressing "Start" on the Title screen)
+## Currently, there is no variable for screen order, order is hardcoded
+func advance_screen():
+	print("advancingadvancing")
+	match CURRENT_SCREEN.NAME:
 		"Title":
-			switch_to_scene("Mode")
+			switch_to_screen("Mode")
+		"Mode":
+			switch_to_screen("Matching")
+		"Matching":
+			switch_to_screen("Pitfight")
 	pass
 
-func reverse_scene():
-	match CURRENT_SCENE.NAME:
+## Opposite of advance. Quits game on Title
+func reverse_screen():
+	match CURRENT_SCREEN.NAME:
 		"Title":
+			close_screen(CURRENT_SCREEN)
 			quit_game()
 		"Mode":
-			switch_to_scene("Title")
+			switch_to_screen("Title")
+		"Matching":
+			switch_to_screen("Mode")
+		"Pitfight":
+			switch_to_screen("Title")
 	pass
 
-func switch_to_scene(scene_name):
-	close_scene(CURRENT_SCENE)
-	open_scene(scene_name)
+## Closes current scene, opens specified scene
+func switch_to_screen(screen_name):
+	close_screen(CURRENT_SCREEN)
+	open_screen(screen_name)
 
-func open_scene(scene_name):
-	var new_scene
+## Opens specified screen
+func open_screen(screen_name):
+	var new_screen
 	
-	match scene_name:
+	match screen_name:
 		"Title":
-			new_scene = TITLE_SCENE.instantiate()
+			new_screen = TITLE_SCREEN.instantiate()
 		"Mode":
-			new_scene = MODE_SCENE.instantiate()
+			new_screen = MODE_SCREEN.instantiate()
+		"Matching":
+			new_screen = MATCHING_SCREEN.instantiate()
+		"Pitfight":
+			new_screen = PITFIGHT_SCREEN.instantiate()
 			
-	add_child(new_scene)
-	CURRENT_SCENE = new_scene
-	connect_signals(new_scene)
+	add_child(new_screen)
+	CURRENT_SCREEN = new_screen
+	connect_signals(new_screen)
 
-func close_scene(scene):
-	scene.queue_free()
+# Closes referenced scene
+func close_screen(screen):
+	screen.close()
+	screen.queue_free()
 	pass
 
-func connect_signals(scene):
-	match scene.NAME:
+## Custom logic per scene to connect their signals
+## Relevant signals are connected here and in InputController
+## TODO: See if they should be connected entirely from here or from InputController or not
+func connect_signals(screen):
+	match screen.NAME:
 		"Title":
-			scene.advance_screen.connect(advance_scene)
-	print(scene.NAME)
-
-
-## =============================================================================
-
-## Prob will contain a lot of logic. Goes back a screen.
-## "Forwards order" is essentially top to bottom of the match statement
-## Each case has slightly different logic, however
-func go_back():
-	match CURRENT_SCENE:
-		"Title":
-			quit_game()
-		"ModeSelect":
-			close_by_group("ModeSelect")
-			open_title()
-		"Draft":
-#			GAME_MANAGER.close()
-#			GAME_MANAGER = null
-			close_by_group("GameManager")
-#			open_mode_select()
-
-
-## Opens title scene
-## Connects title signals
-func open_title():
-	var Title = TITLE_SCENE.instantiate()
-	add_child(Title)
+			screen.advance_screen.connect(advance_screen)
+		"Mode":
+			screen.advance_screen.connect(advance_screen)
 	
-	Title.start_game.connect(start_game)
-	Title.quit_game.connect(quit_game)
-	Title.open_settings.connect(open_settings)
-	
-	CURRENT_SCENE = "Title"
-
-## Opens title scene
-## Connects title signals
-#func open_mode_select():
-#	var Mode = MODE_SCENE.instantiate()
-#	add_child(Mode)
-#	
-#	Mode.players_chosen.connect(create_and_run_game_with_players)
-#	
-#	CURRENT_SCENE = "ModeSelect"
-
-## Deallocates the memory used by everything in the specified group
-## Groups are set manually on Scene root nodes in the metadata
-## Bottom of the "Inspector" tab on root node of each scene
-func close_by_group(group):
-	var children = get_children()
-	for child in children:
-		if child.get_meta("Group", "null") == group:
-			child.queue_free()
-
-## Player has pressed the "Start" button on the title screen
-## Change to ModeSelect
-func start_game():
-	close_by_group("Title")
-#	open_mode_select()
-
-## Player has pressed the "Quit" button on the title screen
-## Or has pressed ESC on the title screen
-func quit_game():
-	close_by_group("Title")
-	get_tree().quit()
+	INPUT_CONTROLLER.connect_signals(screen)
 
 ## Player has pressed the "Settings" button on the title screen
 ## TODO
 func open_settings():
 	print("TODO: Settings menu")
 
-## When a game has started and GAME_MANAGER has taken over processing,
-## This file still handles screen transitions.
-## To do this, GAME_MANAGER will emit signal scene_change with name of new scene
-## That signal causes this to be called, registering the scene change
-## (As of now) mostly just used for go_back()
-func register_scene_change(scene_name):
-	CURRENT_SCENE = scene_name
-
-# Signals from "ModeSelect" ====================================================
-
-## The Player is no longer futsing around in the main menus, and has chosen to enter a game.
-## This function creates and starts a GAME_MANAGER scene, which essentially means a self-contained game has started.
-## Processing now is handed over to the GameManager scene
-#func create_and_run_game_with_players(num_players):
-#	GAME_MANAGER = GAME_MANAGER_SCENE.instantiate()
-#	GAME_MANAGER.scene_change.connect(register_scene_change)
-#	GAME_MANAGER.game_failed_to_start.connect(go_back)
-#	get_parent().add_child(GAME_MANAGER)
-#	GAME_MANAGER.init()
-#	GAME_MANAGER.start(num_players)
-#	close_by_group("ModeSelect")
+## Player has pressed the "Quit" button on the title screen
+## Or has pressed ESC on the title screen
+func quit_game():
+	get_tree().quit()

@@ -16,3 +16,7 @@ func _on_quit_button_pressed() -> void:
 
 func _on_settings_button_pressed() -> void:
 	emit_signal("open_settings")
+
+## Every screen has this. Some are custom.
+func close():
+	pass
