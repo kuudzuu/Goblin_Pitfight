@@ -1,15 +1,7 @@
-## Always the direct child of Master.
-## Created to handle what screen is currently shown to the player, regardles sof if they are in game or out of game
-## Also, handles meta-level user input via keyboard (i.e. "esc" during Intro scenes)
-## When GP is opened, this is created. This then creates and runs the Intro scene
-## When the Intro scene signals that a game has started,
-## the Intro scene is deleted (with important info extracted)
-## and a Game scene starts, which does everything else
-## I think this will let us create multiple games in parallel, leading to multiplayering
-
-## This runs the player through to picking their game mode
-## Once a game mode is picked, a Game is created, and running is passed off to the game
-
+## Direct child of master
+## Handles switching between screens
+## No logic abt when screens should be switched is present here:
+## this is purely functionality to switch screens, triggered by other code (signals)
 extends Node
 
 ## List of possible Screens
@@ -18,9 +10,9 @@ extends Node
 @onready var MATCHING_SCREEN = preload("res://Scenes/Screens/Matching.tscn")
 @onready var PITFIGHT_SCREEN = preload("res://Scenes/Screens/Pitfight.tscn")
 
-## Reference to InputController (throughway to communicate with game interface)
+## Reference to Switchboard (throughway to communicate with game interface)
 ## I figure user input should always be routed through a central area dedicated to it
-var INPUT_CONTROLLER
+var SWITCHBOARD
 
 ## What scene is loaded right now?
 ## Direct reference to scene
@@ -28,18 +20,13 @@ var CURRENT_SCREEN
 
 # Builtin ======================================================================
 
-## Used to parse user input
-func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		reverse_screen()
+## Manually called by Master when created
+## Gives reference to Switchboard.gd
+func init(Switchboard):
+	SWITCHBOARD = Switchboard
 
-## Manually run by Master when created
-## Gives reference to InputController.gd
-func init(InputController):
-	INPUT_CONTROLLER = InputController
-
-## Essentially the "start button" for the screens of the game to show
-## Because only one start, only one run, so it is hardcoded:
+## Essentially the "start button" of the entire game (visually)
+## Because only one start, only one run, so it is hardcoded
 ## Opens the title lol
 func run():
 	open_screen("Title")
@@ -47,7 +34,6 @@ func run():
 ## Advances screens (i.e. pressing "Start" on the Title screen)
 ## Currently, there is no variable for screen order, order is hardcoded
 func advance_screen():
-	print("advancingadvancing")
 	match CURRENT_SCREEN.NAME:
 		"Title":
 			switch_to_screen("Mode")
@@ -55,9 +41,8 @@ func advance_screen():
 			switch_to_screen("Matching")
 		"Matching":
 			switch_to_screen("Pitfight")
-	pass
 
-## Opposite of advance. Quits game on Title
+## Opposite order of advance. Quits game on Title
 func reverse_screen():
 	match CURRENT_SCREEN.NAME:
 		"Title":
@@ -69,7 +54,6 @@ func reverse_screen():
 			switch_to_screen("Mode")
 		"Pitfight":
 			switch_to_screen("Title")
-	pass
 
 ## Closes current scene, opens specified scene
 func switch_to_screen(screen_name):
@@ -77,6 +61,8 @@ func switch_to_screen(screen_name):
 	open_screen(screen_name)
 
 ## Opens specified screen
+## Triggers Switchboard to connect signals where they need to go (coded manually)
+## Adds new scene as a child
 func open_screen(screen_name):
 	var new_screen
 	
@@ -89,28 +75,15 @@ func open_screen(screen_name):
 			new_screen = MATCHING_SCREEN.instantiate()
 		"Pitfight":
 			new_screen = PITFIGHT_SCREEN.instantiate()
-			
-	add_child(new_screen)
+	
 	CURRENT_SCREEN = new_screen
-	connect_signals(new_screen)
+	SWITCHBOARD.connect_screen_signals(new_screen)
+	add_child(new_screen)
 
 # Closes referenced scene
 func close_screen(screen):
 	screen.close()
 	screen.queue_free()
-	pass
-
-## Custom logic per scene to connect their signals
-## Relevant signals are connected here and in InputController
-## TODO: See if they should be connected entirely from here or from InputController or not
-func connect_signals(screen):
-	match screen.NAME:
-		"Title":
-			screen.advance_screen.connect(advance_screen)
-		"Mode":
-			screen.advance_screen.connect(advance_screen)
-	
-	INPUT_CONTROLLER.connect_signals(screen)
 
 ## Player has pressed the "Settings" button on the title screen
 ## TODO

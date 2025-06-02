@@ -12,34 +12,27 @@
 
 extends Node
 
-@onready var GAME_SCENE = preload("res://Scripts/Entities/Game/Game.gd")
-@onready var DRAFT_SCENE = preload("res://Scenes/Screens/Draft.tscn")
+signal game_created
 
-@onready var PLAYER_MANAGER = preload("res://Scripts/Entities/Players/PlayerManager.gd").new()
-@onready var ARENA_MANAGER = preload("res://Scripts/Entities/Arenas/ArenaManager.gd").new()
+var PLAYER_MANAGER
+var ARENA_MANAGER
 
 var GAME
 
-signal scene_change
-signal game_failed_to_start
-
 func init():
-	ARENA_MANAGER.init()
+	pass
 
 ## Called by GPManager when a game is started.
-func start(num_players):
-	create_game()
+func create_game(num_players):
 	fill_players(num_players)
 	choose_arena()
-	open_draft()
+	#OS.delay_msec(1000) # This pauses everything lol. Simple simulation of finding a match
+	game_created.emit()
 
 ## Closes all children. Called by GPManager when user goes back (presses ESC) on draft
 func close():
 	for child in get_children():
 		child.queue_free()
-
-func create_game():
-	GAME = GAME_SCENE.create()
 
 ## Called when game first starts
 ## Fills all players
@@ -48,17 +41,9 @@ func fill_players(num_players):
 	## TODO: Some sort of loop where we wait to connect with other players attempting to join a game
 	## with the same mode. After a timeout or whatever, we can go back by emitting signal game_failed_to_start
 	## For now, we hardcode add players
-	for i in range(num_players):
-		GAME.add_player(PLAYER_MANAGER.create_new_player())
+	pass
 
 ## Called when game first starts
 ## Chooses arena
 func choose_arena():
-	GAME.set_arena(ARENA_MANAGER.get_new_arena())
-
-## Opens the Draft scene, letting players draft
-func open_draft():
-	var Draft = DRAFT_SCENE.instantiate()
-	add_child(Draft)
-	
-	scene_change.emit("Draft")
+	pass

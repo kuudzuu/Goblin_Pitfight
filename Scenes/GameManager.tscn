@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhykkpel213be"]
-
-[ext_resource type="Script" uid="uid://bp7tmjfue5tpq" path="res://Scripts/Entities/Game/GameManager.gd" id="1_m2tc1"]
-
-[node name="GameManager" type="Node2D"]
-script = ExtResource("1_m2tc1")
-metadata/Group = "GameManager"
